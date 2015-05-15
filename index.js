@@ -11,7 +11,7 @@ app.set('port',3000);
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname,'public')));
 
-app.get('/contacts',function(req,res) {
+app.get('/api/contacts',function(req,res) {
     res.json({
         success: true,
         contacts: Object.keys(data.contacts).map(function(id) {
@@ -24,7 +24,7 @@ app.get('/contacts',function(req,res) {
     });
 });
 
-app.get('/contacts/:id',function(req,res) {
+app.get('/api/contacts/:id',function(req,res) {
     var contact = data.contacts[req.params.id];
     if (!contact) {
         res.status(404).json({
@@ -42,7 +42,7 @@ app.get('/contacts/:id',function(req,res) {
     }
 });
 
-app.get('/contacts/:id/messages',function(req,res) {
+app.get('/api/contacts/:id/messages',function(req,res) {
     var contact = data.contacts[req.params.id];
     if (!contact) {
         res.status(404).json({
@@ -57,7 +57,7 @@ app.get('/contacts/:id/messages',function(req,res) {
     }
 });
 
-app.post('/contacts/:id/messages',function(req,res) {
+app.post('/api/contacts/:id/messages',function(req,res) {
     var contact = data.contacts[req.params.id];
     if (!contact) {
         res.status(404).json({
@@ -112,7 +112,7 @@ function randomNotifier() {
 }
 setTimeout(randomNotifier,Math.floor(Math.random() * (10000 - 1000) + 1000));
 
-app.get('/notifications',function(req,res) {
+app.get('/api/notifications',function(req,res) {
     var n = notifications;
     notifications = [];
     res.json({
