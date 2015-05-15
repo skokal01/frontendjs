@@ -19,15 +19,24 @@ The key functional requirements are as follows
 
 A simple REST API that you must integrate with has been provided
 
-* GET /api/contacts
+* **GET /api/contacts**
+
   Lists out all contacts.
-* GET /api/contacts/{id}
+  
+* **GET /api/contacts/{id}**
+
   Shows the details for a particular contact.
-* GET /api/contacts/{id}/messages
+  
+* **GET /api/contacts/{id}/messages**
+
   Shows the message history for a particular contact.
-* POST /api/contacts/{id}/messages
+  
+* **POST /api/contacts/{id}/messages**
+
   Allows the user to send a message to a contact. This API accepts a JSON object of the form { content: 'message' } as its POST data.
-* GET /api/notifications
+  
+* **GET /api/notifications**
+
   Contains a list of all contacts that have sent a message since the last time the API was called. This API should be polled every 5 seconds to allow the UI to show notifications and update message histories as new messages arrive.
 
 ## Deploying the web app
