@@ -3,7 +3,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var data = require('./lib/data');
 
-var notifications = [];
+var notifications = {};
 var MAX_MESSAGES = 50;
 
 var app = new express();
@@ -14,13 +14,7 @@ app.use(express.static(path.join(__dirname,'public')));
 app.get('/api/contacts',function(req,res) {
     res.json({
         success: true,
-        contacts: Object.keys(data.contacts).map(function(id) {
-            var c = data.contacts[id];
-            return {
-                name: c.name,
-                phone: c.phone
-            }
-        })
+        contacts: Object.keys(data.contacts)
     });
 });
 
@@ -35,6 +29,7 @@ app.get('/api/contacts/:id',function(req,res) {
         res.json({
             success: true,
             contact: {
+                id: req.params.id,
                 name: contact.name,
                 phone: contact.phone
             }
@@ -71,16 +66,19 @@ app.post('/api/contacts/:id/messages',function(req,res) {
         });
     } else {
         console.log('Message sent to %s: %s',contact.name,req.body.content);
-        contact.messages.push({
+
+        var msg = {
             type: 'sent',
             content: req.body.content
-        });
+        };
+        contact.messages.push(msg);
 
         if (contact.messages.length > MAX_MESSAGES) {
             contact.messages.shift();
         }
         res.json({
-            success: true
+            success: true,
+            message: msg
         });
     }
 });
@@ -101,20 +99,14 @@ function randomNotifier() {
     if (contact.messages.length > MAX_MESSAGES) {
         contact.messages.shift();
     }
-    notifications.push({
-        contactId: contactId
-    });
-    if (notifications.length > MAX_MESSAGES) {
-        notifications.shift();
-    }
-
+    notifications[contactId] = true;
     setTimeout(randomNotifier,Math.floor(Math.random() * (10000 - 1000) + 1000));
 }
 setTimeout(randomNotifier,Math.floor(Math.random() * (10000 - 1000) + 1000));
 
 app.get('/api/notifications',function(req,res) {
     var n = notifications;
-    notifications = [];
+    notifications = {};
     res.json({
         success: true,
         notifications: n
