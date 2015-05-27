@@ -43,7 +43,7 @@ A simple REST API that you must integrate with has been provided
 
 Instructions for getting the webapp working
 
-1. Create a fork of this repository before starting any development. All of your work should be checked into this fork.
+1. Download this repo as a zip file and extract to your local file system
 2. Download and install node.js and npm for your OS.
 3. cd into the same directory as this README and run ```npm install```
 4. Start the server by running ```node index.js```
@@ -52,4 +52,6 @@ Instructions for getting the webapp working
 ## Building your Web Application
 
 Place any HTML, Javascript, and CSS files you create in the public folder. You can add/modify web files in the public folder while the server is running; just refresh the browser to see your changes.
+
+Once you complete the task, please send the changes back to recruiter in a zip file.
 
